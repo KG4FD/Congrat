@@ -44,42 +44,22 @@ if __name__ == "__main__":
     print("loading data")
     hgraph = load_dataset(args.dataset)
     args.device = device
-    # print(hgraph.x_dict)
-    # print(hgraph.edge_index_dict)
+    hgraph = shuffle_data(hgraph, args)
 
-    # search alpha for five tests
-    # if args.alpha == 1:
-    #     # alphas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-    #     alphas = [0.6, 0.7, 0.8, 0.9, 1]
-    # else:
-    #     # alphas = [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2]
-    #     alphas = [1.6, 1.7, 1.8, 1.9, 2]
-    args.epochs = [30, 60, 90, 120, 150, 180, 210, 240, 270, 300]
-    hidden_channels = [32, 64, 128, 256]
+    for i in range(10):
 
-    for epoch in args.epochs:
-        args.epochs = epoch
-        for h_c in hidden_channels:
-            # print(f"Testing results with alpha = {args.alpha}.")
-            args.hidden_channels = h_c
-            for i in range(1):
-            # for args.alpha in np.arange(0.1, 2.0, 0.2):
-                # Initialize model parameters
-
-                hgraph = shuffle_data(hgraph, args)
-                # model = MHGCL(hidden_channels=args.hidden_channels, out_channels=2, num_layers=args.gnn_layers)
-                model = Congrat(hidden_channels=args.hidden_channels, out_channels=2, num_layers=args.gnn_layers)
-                model.to(device)
-                hgraph.to(device)
-                # print(hgraph.y_dict)
-                # Initialize parameters via lazy initialization
-                with torch.no_grad():  # Initialize lazy modules.
-                    _, _, _, out = model(hgraph.x_dict, hgraph.edge_index_dict)
-
-                # unsup_train(model, hgraph, args)
-                train(model, hgraph, args)
-
-                with torch.no_grad():
-                    # test(model, hgraph, args, i)
-                    test(model, hgraph, args)
+        model = Congrat(hidden_channels=args.hidden_channels, out_channels=2, num_layers=args.gnn_layers)
+        model.to(device)
+        hgraph.to(device)
+        # print(hgraph.y_dict)
+        # Initialize parameters via lazy initialization
+        with torch.no_grad():  # Initialize lazy modules.
+            _, _, _, out = model(hgraph.x_dict, hgraph.edge_index_dict)
+    
+        # unsup_train(model, hgraph, args)
+        train(model, hgraph, args)
+    
+        with torch.no_grad():
+            # test(model, hgraph, args, i)
+            test(model, hgraph, args)
             
