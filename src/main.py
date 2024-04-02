@@ -9,7 +9,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import random
 from utils import load_dataset, shuffle_data
-from MHGCL import HGCL, MHGCL, train, test
+from model import Congrat, train, test
 
 def arg_parser():
     parser = argparse.ArgumentParser()
@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
                 hgraph = shuffle_data(hgraph, args)
                 # model = MHGCL(hidden_channels=args.hidden_channels, out_channels=2, num_layers=args.gnn_layers)
-                model = MHGCL(hidden_channels=args.hidden_channels, out_channels=2, num_layers=args.gnn_layers)
+                model = Congrat(hidden_channels=args.hidden_channels, out_channels=2, num_layers=args.gnn_layers)
                 model.to(device)
                 hgraph.to(device)
                 # print(hgraph.y_dict)
