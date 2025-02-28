@@ -35,7 +35,7 @@ We apply various natural language processing techniques, including Doc2vec, term
 Finally, we apply the same processing to all four datasets, constructing four distinct Heterogeneous Graphs (HGs) based on the news articles from each dataset, as illustrated in the figure below.
 
 <p>
-  <img src="figs/Framework_Congrat.jpg" width="1000">
+  <img src="figs/HG construction.jpg" width="1000">
   <br />
 </p>
 
