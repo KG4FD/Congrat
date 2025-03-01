@@ -16,20 +16,23 @@ Social media platforms categorize the vast number of published news articles bas
 In this work, we construct a Heterogeneous Graph (HG) that consists of three types of nodes: news, entities, and topics. Formally, we define the node set as 𝑉={𝑛, 𝑡, 𝑒} and the relationship set as 𝑅= {𝑥_𝑛,𝑡, 𝑥_𝑛,𝑒, 𝑥_𝑒,𝑒}, where 𝑛, 𝑡, and 𝑒 represent news nodes, topic nodes, and entity nodes, respectively. The edges 𝑥_𝑛,𝑡, 𝑥_𝑛,𝑒, and 𝑥_𝑒,𝑒 correspond to news-topic connections, news-entity connections, and entity-entity connections, as illustrated in Fig. 1. To effectively construct this heterogeneous graph, we propose a structured process consisting of node-level extraction, multi-edge connection, and feature initialization, ensuring a well-defined representation for downstream fake news detection tasks.
 
 1. Node-Level Extraction
+
 In our constructed Heterogeneous Graph (HG), each news article is represented as a news node with assigned labels. To generate entity nodes, we employ TAGME 2, an entity linking tool, to extract various entities present within the news content. For topic nodes, we utilize the Latent Dirichlet Allocation (LDA) model to identify the underlying topics of each news article. Specifically, we set a threshold of 𝛼=50 to define the total number of topics in the LDA model and assign each news article its top 2 most relevant topics.
 
-2. Multi-Edge Connection
+3. Multi-Edge Connection
+
 After constructing the nodes in the Heterogeneous Graph (HG), the next step is to establish connections between them. We define three types of edges in the HG:
 
-News-Topic Edges (𝑥_𝑛,𝑡): A news-topic edge is formed when a news article is associated with a specific topic. Each news node is connected to K topic nodes.
+  -News-Topic Edges (𝑥_𝑛,𝑡): A news-topic edge is formed when a news article is associated with a specific topic. Each news node is connected to K topic nodes.
 
-News-Entity Edges (𝑥_𝑛,𝑒): A news-entity edge is created when a news article contains a particular entity. Each news node can be linked to multiple entity nodes.
+  -News-Entity Edges (𝑥_𝑛,𝑒): A news-entity edge is created when a news article contains a particular entity. Each news node can be linked to multiple entity nodes.
 
-Entity-Entity Edges (𝑥_𝑒,𝑒): An entity-entity edge is established when the cosine similarity score between two entities exceeds a predefined threshold of 𝛽=0.5.
+  -Entity-Entity Edges (𝑥_𝑒,𝑒): An entity-entity edge is established when the cosine similarity score between two entities exceeds a predefined threshold of 𝛽=0.5.
 
 These connections ensure a structured and meaningful representation of relationships within the HG, facilitating effective fake news detection.
 
 3. Feature Initialization
+
 We apply various natural language processing techniques, including Doc2vec, term frequency-inverse document frequency (TF-IDF), and one-hot encoding, to initialize the feature vectors for the nodes in the Heterogeneous Graph (HG). For news nodes, both TF-IDF and Doc2vec are utilized to encode the content of each news article. For entity nodes and topic nodes, TF-IDF and one-hot encoding are used to initialize their respective feature vectors. These methods effectively capture the rich and diverse features inherent in the three types of HG nodes, providing a robust foundation for further processing and analysis.
 
 Finally, we apply the same processing to all four datasets, constructing four distinct Heterogeneous Graphs (HGs) based on the news articles from each dataset, as illustrated in the figure below.
